@@ -12,44 +12,68 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className="text-3xl font-bold underline">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+      <main className="min-h-screen">
+        <div className="h-60 bg-gradient-to-r from-slate-800 to-slate-500">
+          <div className="pt-2 mx-5">
+            <h1 className="m-2 pb-2 text-3xl text-slate-200 border-b-2 border-slate-300/10">
+              CHD3 Foundation
+            </h1>
+            <h2 className="m-2 pt-1 text-3xl text-slate-200">
+              Snijders Blok Campeu Syndrome
+            </h2>
+            <h2 className="m-2 text-2xl text-slate-400 w-1/2">
+              Providing support and information for families that are impacted
+              by the CHD3 gene mutation
+            </h2>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 m-4">
+          <div className="shadow-md m-2 bg-gray-100 rounded-md">
+            <h2 className="m-4 text-gray-800 text-3xl font-semibold">About</h2>
+            <p className="m-4 text-gray-600">
+              Snijders Blok-Campeau Syndrome is a rare neurodevelopmental
+              disorder caused by mutations in the CHD3 gene, which has an
+              important role during early brain development. This gene makes a
+              protein that is believed to regulate the function of other genes
+              in the developing brain, all of which work together to ensure that
+              brain cells move into their correct positions at the right time.
+              Even small changes in CHD3 can disrupt that process, resulting in
+              abnormal brain development and creating a variety of conditions
+              that affect other parts of the body.
             </p>
-          </a>
+            <p className="m-4 text-gray-600">
+              Approximately 60 individuals worldwide have been diagnosed with
+              this disorder. Common traits are intellectual disability,
+              developmental delays, hypotonia, impaired speech and language, and
+              characteristic facial features. Many children have feeding
+              difficulties, and sitting, standing, and walking are often
+              delayed.
+            </p>
+
+            <h2 className="m-4 text-gray-800 text-3xl font-semibold">
+              Quick Facts
+            </h2>
+            <div className="flex items-center justify-around mb-4">
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-40 h-40 text-3xl text-gray-600 rounded-full border-8 border-slate-800 flex items-center justify-center">
+                  60
+                </div>
+                <div className="mt-2 text-gray-600">Known Cases</div>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-40 h-40 text-3xl text-gray-600 rounded-full border-8 border-slate-600 flex items-center justify-center">
+                  60
+                </div>
+                <div className="mt-2 text-gray-600">Research Participants</div>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-40 h-40 text-3xl text-gray-600 rounded-full border-8 border-slate-500 flex items-center justify-center">
+                  60
+                </div>
+                <div className="mt-2 text-gray-600">Support Group Members</div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
