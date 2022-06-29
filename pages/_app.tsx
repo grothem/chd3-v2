@@ -1,13 +1,16 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const clientId = process.env.NEXT_PUBLIC_CLIENT_ID || "";
   return (
-    <PayPalScriptProvider options={{ "client-id": clientId }}>
-      <Component {...pageProps} />
-    </PayPalScriptProvider>
+    <>
+      <Script
+        src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js"
+        strategy="beforeInteractive"
+      />
+      <Component {...pageProps} />;
+    </>
   );
 }
 
