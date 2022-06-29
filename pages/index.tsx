@@ -1,47 +1,36 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-import { FC, Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import CurrencyInput from "react-currency-input-field";
+import { useEffect } from "react";
 
 const defaultDonationAmount = 20;
 
+declare global {
+  interface Window {
+    PayPal: any;
+  }
+}
+
+let init = false;
+
 const Home: NextPage = () => {
-  let [isOpen, setIsOpen] = useState(false);
-  let [thankYouOpen, setThankYouOpen] = useState(false);
-  let [donationAmount, setDonationAmount] = useState(
-    defaultDonationAmount.toString()
-  );
+  useEffect(() => {
+    if (init) {
+      return;
+    }
 
-  function closeModal() {
-    setIsOpen(false);
-    setDonationAmount(defaultDonationAmount.toString());
-  }
+    window.PayPal.Donation.Button({
+      env: "production",
+      hosted_button_id: "JHUHRLZNSA654",
+      image: {
+        src: "https://pics.paypal.com/00/s/MDU2M2UwZjQtMzQwMS00NjU4LWE2ZDMtZTk5YTcwN2RiNGY1/file.PNG",
+        alt: "Donate with PayPal button",
+        title: "PayPal - The safer, easier way to pay online!",
+      },
+    }).render("#donate-button");
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeThankYou() {
-    setThankYouOpen(false);
-  }
-
-  function openThankYou() {
-    setThankYouOpen(true);
-  }
-
-  function donationAmountChanged(amount: string | undefined) {
-    console.log("setting donation amount to", amount);
-    setDonationAmount(amount || defaultDonationAmount.toString());
-  }
-
-  async function onDonationApprove() {
-    setIsOpen(false);
-    openThankYou();
-  }
+    init = true;
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -56,27 +45,9 @@ const Home: NextPage = () => {
           <div className="pt-2 mx-5">
             <div className="pb-2 flex justify-between items-center border-b-2 border-slate-300/10">
               <h1 className="m-2 text-3xl text-slate-200 ">CHD3 Foundation</h1>
-              <button
-                type="button"
-                onClick={openModal}
-                className="rounded-full bg-black bg-opacity-40 px-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 flex items-center justify-center gap-2 h-8"
-              >
-                Donate
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-              </button>
+              <div className="rounded-full bg-black bg-opacity-40 px-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 flex items-center justify-center gap-2 h-8">
+                <div id="donate-button" style={{ width: "90px" }}></div>
+              </div>
             </div>
             <div className="flex flex-col items-center md:items-start">
               <h2 className="m-2 pt-1 text-2xl text-center md:text-left text-slate-200">
@@ -151,177 +122,7 @@ const Home: NextPage = () => {
           </span>
         </a>
       </footer> */}
-
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-800"
-                  >
-                    Your donation will help support CHD3 research
-                  </Dialog.Title>
-                  <div className="m-4 flex justify-center">
-                    <CurrencyInput
-                      prefix="$"
-                      placeholder="Donation amount"
-                      defaultValue={defaultDonationAmount}
-                      decimalsLimit={2}
-                      onValueChange={donationAmountChanged}
-                    />
-                  </div>
-
-                  <div className="mt-4">
-                    <ButtonWrapper
-                      currency="USD"
-                      amount={donationAmount}
-                      onApprove={onDonationApprove}
-                    />
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      <Transition appear show={thankYouOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeThankYou}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-800"
-                  >
-                    Thank you for your donation!
-                  </Dialog.Title>
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeThankYou}
-                    >
-                      Close
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
     </div>
-  );
-};
-
-const ButtonWrapper: FC<{
-  currency: string;
-  amount: string;
-  onApprove: (data: any, actions: any) => Promise<void>;
-}> = ({ currency, amount, onApprove }) => {
-  // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-  // This is the main reason to wrap the PayPalButtons in a new component
-  const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-
-  useEffect(() => {
-    dispatch({
-      type: "resetOptions",
-      value: {
-        ...options,
-        currency: currency,
-      },
-    });
-  }, [currency, amount]);
-
-  const createOrder = (data: any, actions: any) => {
-    return actions.order
-      .create({
-        purchase_units: [
-          {
-            amount: {
-              value: amount,
-              breakdown: {
-                item_total: {
-                  currency_code: currency,
-                  value: amount,
-                },
-              },
-            },
-            items: [
-              {
-                name: "donation",
-                quantity: "1",
-                unit_amount: {
-                  currency_code: currency,
-                  value: amount,
-                },
-                category: "DONATION",
-              },
-            ],
-          },
-        ],
-      })
-      .then((orderId: string) => {
-        console.log("all done");
-        // Your code here after create the donation
-        return orderId;
-      });
-  };
-
-  console.log(`the amount is ${amount}`);
-  return (
-    <PayPalButtons
-      fundingSource="paypal"
-      style={{ layout: "vertical", label: "donate" }}
-      disabled={false}
-      onApprove={onApprove}
-      createOrder={createOrder}
-    />
   );
 };
 
