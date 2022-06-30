@@ -43,17 +43,17 @@ const Home: NextPage = () => {
       <main className="min-h-screen">
         <div className="h-72 md:h-60 bg-gradient-to-r from-slate-800 to-slate-500">
           <div className="pt-2 mx-5">
-            <div className="pb-2 flex justify-between items-center border-b-2 border-slate-300/10">
+            <div className="mx-5 pb-2 flex justify-between items-center border-b-2 border-slate-300/10">
               <h1 className="m-2 text-3xl text-slate-200 ">CHD3 Foundation</h1>
               <div className="rounded-full bg-black bg-opacity-40 px-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 flex items-center justify-center gap-2 h-8">
                 <div id="donate-button" style={{ width: "90px" }}></div>
               </div>
             </div>
-            <div className="flex flex-col items-center md:items-start">
+            <div className="mx-5 flex flex-col items-center md:items-start">
               <h2 className="m-2 pt-1 text-2xl text-center md:text-left text-slate-200">
                 Snijders Blok Campeu Syndrome
               </h2>
-              <h2 className="m-2 p-4 md:p-0 text-l md:text-2xl text-center md:text-left text-slate-400 w-full md:w-1/2 text-">
+              <h2 className="m-1 p-4 md:p-0 text-l md:text-2xl text-center md:text-left text-slate-400 w-full md:w-1/2 text-">
                 Providing support and information for families that are impacted
                 by the CHD3 gene mutation
               </h2>
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 m-4">
-          <div className="shadow-md m-2 bg-gray-100 rounded-md">
+          <div className="mx-5 shadow-md m-2 bg-gray-100 rounded-md">
             <h2 className="m-4 text-gray-800 text-3xl font-semibold">About</h2>
             <p className="m-4 text-gray-600">
               Snijders Blok-Campeau Syndrome is a rare neurodevelopmental
@@ -95,13 +95,13 @@ const Home: NextPage = () => {
               </div>
               <div className="flex flex-col items-center justify-center">
                 <div className="w-40 h-40 text-3xl text-gray-600 rounded-full border-8 border-slate-600 flex items-center justify-center">
-                  60
+                  20
                 </div>
                 <div className="mt-2 text-gray-600">Research Participants</div>
               </div>
               <div className="flex flex-col items-center justify-center">
                 <div className="w-40 h-40 text-3xl text-gray-600 rounded-full border-8 border-slate-500 flex items-center justify-center">
-                  60
+                  332
                 </div>
                 <div className="mt-2 text-gray-600">Support Group Members</div>
               </div>
